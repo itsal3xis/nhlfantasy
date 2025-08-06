@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHL Fantasy Draft</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #0a2540;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .background-anim {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 520px;
+            margin: 90px auto;
+            background: rgba(255,255,255,0.08);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+            padding: 48px 36px 36px 36px;
+            text-align: center;
+            backdrop-filter: blur(2px);
+        }
+        h1 {
+            font-size: 2.7em;
+            margin-bottom: 0.2em;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 12px #1e90ff55;
+        }
+        .subtitle {
+            font-size: 1.25em;
+            margin-bottom: 2em;
+            color: #b3e0ff;
+        }
+        .btn {
+            display: inline-block;
+            margin: 0 12px;
+            padding: 14px 38px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #1e90ff 60%, #00c6fb 100%);
+            color: #fff;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 2px 12px #1e90ff33;
+            transition: transform 0.15s, box-shadow 0.15s, background 0.3s;
+        }
+        .btn:hover {
+            background: linear-gradient(90deg, #00c6fb 60%, #1e90ff 100%);
+            transform: scale(1.07) rotate(-2deg);
+            box-shadow: 0 6px 24px #1e90ff66;
+        }
+        .logo {
+            width: 90px;
+            margin-bottom: 24px;
+            filter: drop-shadow(0 2px 12px #1e90ff88);
+            animation: bounce 1.8s infinite alternate cubic-bezier(.5,1.7,.5,1);
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0);}
+            100% { transform: translateY(-18px);}
+        }
+        .features {
+            margin: 36px 0 0 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            align-items: center;
+        }
+        .feature {
+            background: rgba(30,144,255,0.08);
+            border-left: 4px solid #1e90ff;
+            border-radius: 6px;
+            padding: 10px 18px;
+            max-width: 340px;
+            font-size: 1em;
+            text-align: left;
+            box-shadow: 0 2px 8px #1e90ff11;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 24px 8px; }
+            .features { gap: 10px; }
+            .feature { font-size: 0.98em; }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="background-anim"></canvas>
+    <div class="container">
+        <svg class="logo" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="32" fill="#1e90ff"/>
+            <text x="32" y="40" text-anchor="middle" font-size="28" fill="#fff" font-family="Arial" font-weight="bold">🏒</text>
+        </svg>
+        <h1>NHL Fantasy Draft</h1>
+        <div class="subtitle">Compose ton équipe, défie tes amis et vis la saison NHL autrement !</div>
+        <div class="features">
+            <div class="feature">📝 Draft en direct avec classement en temps réel</div>
+            <div class="feature">👥 Ligues privées ou publiques</div>
+            <div class="feature">📊 Statistiques et performances mises à jour chaque nuit</div>
+            <div class="feature">🏆 Classements, trophées et défis hebdomadaires</div>
+        </div>
+    </div>
+    <script>
+        // Animation de palets de hockey qui flottent
+        const canvas = document.querySelector('.background-anim');
+        const ctx = canvas.getContext('2d');
+        let pucks = [];
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function createPuck() {
+            return {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: 18 + Math.random() * 12,
+                dx: -0.5 + Math.random(),
+                dy: -0.5 + Math.random(),
+                alpha: 0.13 + Math.random() * 0.13
+            };
+        }
+        for (let i = 0; i < 16; i++) pucks.push(createPuck());
+
+        function drawPuck(p) {
+            ctx.save();
+            ctx.globalAlpha = p.alpha;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
+            ctx.fillStyle = "#222";
+            ctx.shadowColor = "#1e90ff";
+            ctx.shadowBlur = 12;
+            ctx.fill();
+            ctx.restore();
+            // Lignes blanches sur le palet
+            ctx.save();
+            ctx.globalAlpha = p.alpha * 1.5;
+            ctx.strokeStyle = "#fff";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r * 0.7, Math.PI * 0.2, Math.PI * 1.2);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let p of pucks) {
+                p.x += p.dx;
+                p.y += p.dy;
+                if (p.x < -40) p.x = canvas.width + 40;
+                if (p.x > canvas.width + 40) p.x = -40;
+                if (p.y < -40) p.y = canvas.height + 40;
+                if (p.y > canvas.height + 40) p.y = -40;
+                drawPuck(p);
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
