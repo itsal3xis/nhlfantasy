@@ -1,138 +1,274 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Profil Joueur NHL Fantasy</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            background: #181f2a;
-            color: #fff;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .profile-card {
-            background: #232b3a;
-            border-radius: 24px;
-            box-shadow: 0 8px 32px #0006;
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 36px 32px 32px 32px;
-        }
-        .banner-row {
-            display: flex;
-            align-items: flex-end;
-            gap: 32px;
-        }
-        .banner-img {
-            width: 60%;
-            height: 220px;
-            object-fit: cover;
-            border-radius: 16px;
-            box-shadow: 0 4px 24px #1e90ff33;
-            position: relative;
-        }
-        .player-info-block {
-            display: flex;
-            align-items: center;
-            gap: 22px;
-            margin-bottom: 0;
-        }
-        .headshot {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            border: 4px solid #fff;
-            background: #fff;
-            box-shadow: 0 2px 12px #1e90ff88;
-            object-fit: cover;
-        }
-        .player-name-block {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .team-logo {
-            width: 38px;
-            height: 38px;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-        .player-name {
-            font-size: 2em;
-            font-weight: bold;
-        }
-        .player-number {
-            font-size: 1.3em;
-            color: #1e90ff;
-            font-weight: bold;
-        }
-        .stats-list {
-            margin-top: 32px;
-            margin-left: 142px;
-            text-align: left;
-        }
-        .stats-list dt {
-            color: #1e90ff;
-            font-weight: bold;
-            margin-top: 0.7em;
-            font-size: 1.08em;
-        }
-        .stats-list dd {
-            margin: 0 0 0.5em 0;
-            font-size: 1.08em;
-        }
-        @media (max-width: 900px) {
-            .profile-card {
-                padding: 18px 8px;
-            }
-            .banner-row {
-                flex-direction: column;
-                gap: 0;
-                align-items: center;
-            }
-            .banner-img {
-                width: 100%;
-                margin-bottom: 18px;
-            }
-            .player-info-block {
-                flex-direction: column;
-                gap: 12px;
-            }
-            .stats-list {
-                margin-left: 0;
-                margin-top: 24px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Profil Joueur NHL Fantasy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #181f2a;
+      color: #fff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .profile-card {
+      max-width: 1200px;
+      margin: 40px auto;
+      background: #232b3a;
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      padding: 40px;
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+    }
+    .left-block {
+      width: 45%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .banner-container {
+      width: 100%;
+      height: 260px;
+      position: relative;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .banner-container img.banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px;
+      display: block;
+    }
+    .profile-pic {
+      position: absolute;
+      left: 30px;
+      bottom: -35px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      background: #fff;
+      box-shadow: 0 2px 12px #1e90ff88;
+      object-fit: cover;
+      z-index: 2;
+    }
+    .player-details {
+      margin-top: 10px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 6px; /* réduit l'espace entre les éléments */
+      padding-left: 30px;
+    }
+    .team-logo {
+      width: 32px;
+      height: 32px;
+    }
+    .player-name {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin: 0;
+    }
+    .player-number {
+      font-size: 1.1em;
+      color: #1e90ff;
+      font-weight: bold;
+      margin-left: 4px;
+    }
+    .right-block {
+      width: 55%;
+      padding: 30px 0 0 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .stats-title {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #b3e0ff;
+      margin-bottom: 18px;
+    }
+    .stats-menu {
+      margin-bottom: 18px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .stats-select {
+      background: #232b3a;
+      color: #fff;
+      border: 1px solid #1e90ff;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-family: inherit;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    .stats-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 1.1em;
+    }
+    .stats-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 18px;
+    }
+    .stats-label {
+      color: #1e90ff;
+      font-weight: bold;
+      min-width: 120px;
+      text-align: left;
+    }
+    .stats-value {
+      color: #fff;
+      font-weight: normal;
+      text-align: left;
+    }
+    @media (max-width: 900px) {
+      .profile-card { flex-direction: column; padding: 10px; }
+      .left-block, .right-block { width: 100%; }
+      .banner-container { height: 160px; }
+      .profile-pic { left: 50%; transform: translateX(-50%); }
+      .player-details { margin-left: 0; margin-top: 80px; flex-direction: column; }
+      .right-block { padding: 20px 0 0 0; }
+    }
+  </style>
+  <script>
+    function updateStats() {
+      var select = document.getElementById('stats-select');
+      var seasonStats = document.getElementById('season-stats');
+      var careerStats = document.getElementById('career-stats');
+      var playoffsStats = document.getElementById('playoffs-stats');
+
+      seasonStats.style.display = 'none';
+      careerStats.style.display = 'none';
+      playoffsStats.style.display = 'none';
+
+      if (select.value === 'season') {
+        seasonStats.style.display = 'block';
+      } else if (select.value === 'career') {
+        careerStats.style.display = 'block';
+      } else if (select.value === 'playoffs') {
+        playoffsStats.style.display = 'block';
+      }
+    }
+    window.addEventListener('DOMContentLoaded', updateStats);
+  </script>
 </head>
 <body>
-    <div class="profile-card">
-        <div class="banner-row">
-            <img src="{{ banner_url }}" alt="Banner" class="banner-img">
-            <div>
-                <div class="player-info-block">
-                    <img src="{{ headshot_url }}" alt="Headshot" class="headshot">
-                    <div class="player-name-block">
-                        <img src="{{ team_logo_url }}" alt="Team Logo" class="team-logo">
-                        <span class="player-name">{{ player_name }}</span>
-                        <span class="player-number">- {{ player_number }}</span>
-                    </div>
-                </div>
-                <dl class="stats-list">
-                    <dt>Position</dt>
-                    <dd>{{ position }}</dd>
-                    <dt>Games Played</dt>
-                    <dd>{{ games_played }}</dd>
-                    <dt>Goals</dt>
-                    <dd>{{ goals }}</dd>
-                    <dt>Assists</dt>
-                    <dd>{{ assists }}</dd>
-                    <!-- Ajoute d'autres stats ici -->
-                </dl>
-            </div>
-        </div>
+  <div class="profile-card">
+    <div class="left-block">
+      <div class="banner-container">
+        <img src="{{ banner_url }}" alt="Hero Image" class="banner-img">
+        <img src="{{ headshot_url }}" alt="Profile Picture" class="profile-pic">
+      </div>
+      <div class="player-details">
+        <img src="{{ team_logo_url }}" alt="Team Logo" class="team-logo">
+        <span class="player-name">{{ player_name }}</span>
+        <span class="player-number">- {{ player_number }}</span>
+      </div>
     </div>
+    <div class="right-block">
+      <div class="stats-title">Statistiques</div>
+      <div class="stats-menu">
+        <label for="stats-select">Afficher :</label>
+        <select id="stats-select" class="stats-select" onchange="updateStats()">
+          <option value="season">Saison régulière</option>
+          <option value="career">Carrière</option>
+          <option value="playoffs">Séries éliminatoires</option>
+        </select>
+      </div>
+      <div class="stats-list" id="season-stats">
+        <div class="stats-row">
+          <div class="stats-label">Team</div>
+          <div class="stats-value">{{ team }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Position</div>
+          <div class="stats-value">{{ position }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Games played</div>
+          <div class="stats-value">{{ games_played }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Goals</div>
+          <div class="stats-value">{{ goals }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Assists</div>
+          <div class="stats-value">{{ assists }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Points</div>
+          <div class="stats-value">{{ points }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Plusminus</div>
+          <div class="stats-value">{{ plusminus }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Birthdate</div>
+          <div class="stats-value">{{ birthdate }}</div>
+        </div>
+      </div>
+      <div class="stats-list" id="career-stats" style="display:none;">
+        <div class="stats-row">
+          <div class="stats-label">Games played</div>
+          <div class="stats-value">{{ career_games_played }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Goals</div>
+          <div class="stats-value">{{ career_goals }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Assists</div>
+          <div class="stats-value">{{ career_assists }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Points</div>
+          <div class="stats-value">{{ career_points }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Plusminus</div>
+          <div class="stats-value">{{ career_plusminus }}</div>
+        </div>
+      </div>
+      <div class="stats-list" id="playoffs-stats" style="display:none;">
+        <div class="stats-row">
+          <div class="stats-label">Games played</div>
+          <div class="stats-value">{{ playoffs_games_played }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Goals</div>
+          <div class="stats-value">{{ playoffs_goals }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Assists</div>
+          <div class="stats-value">{{ playoffs_assists }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Points</div>
+          <div class="stats-value">{{ playoffs_points }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stats-label">Plusminus</div>
+          <div class="stats-value">{{ playoffs_plusminus }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

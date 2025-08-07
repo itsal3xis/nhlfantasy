@@ -40,10 +40,9 @@ def profile(slug):
         games_played=player.get("gamesPlayed", ""),
         goals=player.get("goals", ""),
         assists=player.get("assists", ""),
-        comparison_chart_url="/static/comparison_chart.png",  # à remplacer par ton graphique
-        opponent_headshot_url="/static/opponent_headshot.png",  # exemple
-        opponent_name="Connor Hellebuyck",  # exemple
-        opponent_elo="2381"  # exemple
+        opponent_headshot_url="/static/opponent_headshot.png",  # placeover exemple
+        opponent_name="Connor Hellebuyck",  # placeover exemple
+        opponent_elo="2381"  # placeover exemple
     )
 
 if __name__ == '__main__':
